@@ -6,7 +6,7 @@ import java.awt.event.ActionListener;
 public class Splash extends JFrame {
 	
 	public Splash() {
-		
+		System.out.println("Hola a todos");
 	}
 	
 }
