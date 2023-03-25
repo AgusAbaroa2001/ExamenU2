@@ -5,4 +5,8 @@ import java.awt.event.ActionListener;
 
 public class Splash extends JFrame {
 	
+	public Splash() {
+		
+	}
+	
 }
