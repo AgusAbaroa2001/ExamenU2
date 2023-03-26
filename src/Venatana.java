@@ -64,6 +64,23 @@ public class Venatana extends JFrame{
 			this.repaint();
 			this.revalidate();
 		}
+		if(actual.equals("menu")){
+			panel = menu();
+			
+			this.add(panel);
+			
+			this.repaint();
+			this.revalidate();
+		}
+		
+		if(actual.equals("miCuenta")){
+			panel = miCuenta();
+			
+			this.add(panel);
+			
+			this.repaint();
+			this.revalidate();
+		}
 		
 	}
 	
@@ -150,7 +167,7 @@ public class Venatana extends JFrame{
 						if (leector(nombreC.getText(),temp)) {
 							JOptionPane.showMessageDialog(null,"Bienvenido "+nombreC.getText());
 							anterior = actual;
-							actual = "registro";
+							actual = "menu";//+++++++++
 							
 							limpiarVentana();
 							repaint();
@@ -173,7 +190,207 @@ public class Venatana extends JFrame{
 		return jpL;
 		
 	}
+	
+	public JPanel menu()//_________________________________________________________________________
+	{
+		anterior = actual;
+		actual = "menu";
+		
+		//PANEL PRINCIPAL-------------------------------------------------
+		JPanel jpM = new JPanel();
+		jpM.setSize(500, 600);
+		jpM.setLocation(0, 0);
+		jpM.setLayout(null);
+		jpM.setBackground(Color.decode("#76D09A"));
+		
+		
+		//TITULO----------------------------------------------------------
+		JLabel tituloM = new JLabel("Bievenido Usuario",JLabel.CENTER);
+		tituloM.setFont(new Font("Arial", Font.BOLD,20));
+		tituloM.setSize(280, 40);
+		tituloM.setLocation(100, 40);
+		tituloM.setOpaque(true);
+		tituloM.setBackground(Color.decode("#76D09A"));
+		tituloM.setForeground(Color.white);
+		jpM.add(tituloM);
+		
+		//BARRA-----------------------------------------------------------
+		JMenuBar barra = new JMenuBar();
+		barra.setLocation(0,0);
+		barra.setSize(500,30);
+		this.add(barra);
+		
+		JMenu cuenta = new JMenu("Cuenta");
+		JMenu usuarios = new JMenu("Usuarios");
+		JMenu ayuda = new JMenu("Ayuda");
+		
+		barra.add(cuenta);
+		barra.add(usuarios);
+		barra.add(ayuda);
+		
+		JMenuItem miCuenta = new JMenuItem("Mi Cuenta");
+		miCuenta.addActionListener(new ActionListener() {//VAS AL PANEL DE MI CUENTA--------------
 
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				
+				anterior = actual;
+				actual = "miCuenta";
+				
+				limpiarVentana();
+				
+			}
+			
+		});
+		JMenuItem cerrarSesion = new JMenuItem("Cerrar Sesión");
+		cerrarSesion.addActionListener(new ActionListener() {//CIERRA LA SESION--------------
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				
+				anterior = actual;
+				actual = "login";
+				
+				limpiarVentana();
+				
+			}
+			
+		});
+		cuenta.add(miCuenta);
+		cuenta.add(cerrarSesion);
+		
+		
+		JMenuItem listaUsuarios = new JMenuItem("Lista de Usuarios");
+		JMenuItem crearUsuarios = new JMenuItem("Crear Usuarios");
+		usuarios.add(listaUsuarios);
+		usuarios.add(crearUsuarios);
+		
+		JMenuItem comoCrear = new JMenuItem("¿Cómo Crear Usuarios?");
+		ayuda.add(comoCrear);
+		
+		setJMenuBar(barra);
+		
+		return jpM;	
+	}
+	
+	public JPanel miCuenta()//_______________________________________________________________
+	{
+		anterior = actual;
+		actual = "miCuenta";
+		
+		//PANEL PRINCIPAL-------------------------------------------------
+		JPanel jpMC = new JPanel();
+		jpMC.setSize(500, 600);
+		jpMC.setLocation(0, 0);
+		jpMC.setLayout(null);
+		jpMC.setBackground(Color.decode("#76D09A"));
+		
+		//TITULO----------------------------------------------------------
+		JLabel titulo = new JLabel("Mi Cuenta Personal",JLabel.CENTER);
+		titulo.setFont(new Font("Arial", Font.BOLD,20));
+		titulo.setSize(280, 40);
+		titulo.setLocation(100, 20);
+		titulo.setOpaque(true);
+		titulo.setBackground(Color.decode("#76D09A"));
+		titulo.setForeground(Color.white);
+		jpMC.add(titulo);
+		
+		//PANEL SECUNDARIO-------------------------------------------------
+		JPanel jpMC2 = new JPanel();
+		jpMC2.setSize(400, 350);
+		jpMC2.setLocation(50, 150);
+		jpMC2.setLayout(null);
+		jpMC2.setBackground(Color.decode("#60AF93"));
+		jpMC.add(jpMC2);
+		
+		//NOMBRE-----------------------------------------------------------
+		JLabel nombreTag = new JLabel("Nombre: ",JLabel.LEFT);
+		nombreTag.setFont(new Font("Arial", Font.BOLD,15));
+		nombreTag.setSize(200, 20);
+		nombreTag.setLocation(50, 30);
+		nombreTag.setOpaque(true);
+		nombreTag.setBackground(Color.decode("#60AF93"));
+		nombreTag.setForeground(Color.white);
+		jpMC2.add(nombreTag);
+		JTextField nombreC = new JTextField("");
+		nombreC.setSize(300, 30);
+		nombreC.setLocation(50, 50);
+		jpMC2.add(nombreC);
+		
+		//APELLIDOS-----------------------------------------------------------
+		JLabel apellidosTag = new JLabel("Apellidos: ",JLabel.LEFT);
+		apellidosTag.setFont(new Font("Arial", Font.BOLD,15));
+		apellidosTag.setSize(200, 20);
+		apellidosTag.setLocation(50, 90);
+		apellidosTag.setOpaque(true);
+		apellidosTag.setBackground(Color.decode("#60AF93"));
+		apellidosTag.setForeground(Color.white);
+		jpMC2.add(apellidosTag);
+		JTextField apellidosC = new JTextField("");
+		apellidosC.setSize(300, 30);
+		apellidosC.setLocation(50, 110);
+		jpMC2.add(apellidosC);
+		
+		//CORREO-----------------------------------------------------------
+		JLabel correoTag = new JLabel("Correo: ",JLabel.LEFT);
+		correoTag.setFont(new Font("Arial", Font.BOLD,15));
+		correoTag.setSize(200, 20);
+		correoTag.setLocation(50, 150);
+		correoTag.setOpaque(true);
+		correoTag.setBackground(Color.decode("#60AF93"));
+		correoTag.setForeground(Color.white);
+		jpMC2.add(correoTag);
+		JTextField correoC = new JTextField("");
+		correoC.setSize(300, 30);
+		correoC.setLocation(50, 170);
+		jpMC2.add(correoC);
+		
+		//CONTRASEÑA-----------------------------------------------------------
+		JLabel contraTag = new JLabel("Contraseña: ",JLabel.LEFT);
+		contraTag.setFont(new Font("Arial", Font.BOLD,15));
+		contraTag.setSize(200, 20);
+		contraTag.setLocation(50, 210);
+		contraTag.setOpaque(true);
+		contraTag.setBackground(Color.decode("#60AF93"));
+		contraTag.setForeground(Color.white);
+		jpMC2.add(contraTag);
+		JPasswordField contraC = new JPasswordField("");
+		contraC.setSize(300, 30);
+		contraC.setLocation(50, 230);
+		jpMC2.add(contraC);
+		
+		//BOTONES--------------------------------------------------------------
+		JButton cancelar = new JButton("Cancelar");
+		cancelar.setSize(140,40);
+		cancelar.setLocation(50,280);
+		cancelar.setBackground(Color.decode("#E48080"));
+		cancelar.setForeground(Color.white);
+		jpMC2.add(cancelar);
+		cancelar.addActionListener(new ActionListener() {//VAS AL PANEL DE MI CUENTA--------------
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				
+				anterior = actual;
+				actual = "menu";
+				
+				limpiarVentana();
+				
+			}
+			
+		});
+		JButton iniciarS = new JButton("Actualizar Datos");
+		iniciarS.setSize(150,40);
+		iniciarS.setLocation(200,280);
+		iniciarS.setBackground(Color.decode("#3DADFF"));
+		iniciarS.setForeground(Color.white);
+		jpMC2.add(iniciarS);
+		
+		return(jpMC);
+	}
 	
 	public JPanel registro() {
 		
