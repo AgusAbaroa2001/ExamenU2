@@ -31,7 +31,8 @@ public class Venatana extends JFrame{
 		this.setVisible(true);
 		this.setSize(500, 600);
 		this.setLocationRelativeTo(null);
-		this.setTitle("Hola mundo");
+		this.setTitle("Cuenta");
+		this.setResizable(false);
 		
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setLayout(null);
@@ -276,6 +277,21 @@ public class Venatana extends JFrame{
 		
 		JMenuItem listaUsuarios = new JMenuItem("Lista de Usuarios");
 		JMenuItem crearUsuarios = new JMenuItem("Crear Usuarios");
+		
+		crearUsuarios.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				anterior = actual;
+				actual = "registro";
+				
+				limpiarVentana();
+				
+			}
+			
+		});
+		
 		usuarios.add(listaUsuarios);
 		usuarios.add(crearUsuarios);
 		
@@ -426,75 +442,122 @@ public class Venatana extends JFrame{
 		jp2.setSize(500, 700);
 		jp2.setLocation(0, 0);
 		jp2.setLayout(null);
-		jp2.setBackground(Color.decode("#C45EDF"));
+		jp2.setBackground(Color.decode("#76D09A"));
+		
+		JPanel jpMC2 = new JPanel();
+		jpMC2.setSize(400, 400);
+		jpMC2.setLocation(50, 150);
+		jpMC2.setLayout(null);
+		jpMC2.setBackground(Color.decode("#60AF93"));
+		jp2.add(jpMC2);
 		
 		//titulo
-		JLabel titleR = new JLabel("Registro nuevo usuario",JLabel.CENTER);
+		JLabel titleR = new JLabel("Crear usuario",JLabel.CENTER);
 		titleR.setFont(new Font("Comic Sans", Font.BOLD,20));
-		titleR.setSize(280, 40);
-		titleR.setLocation(100, 20);
+		titleR.setSize(200, 40);
+		titleR.setLocation(150, 20);
 		titleR.setOpaque(true);
-		titleR.setBackground(Color.green);
+		titleR.setBackground(Color.decode("#76D09A"));
+		titleR.setForeground(Color.white);
 		jp2.add(titleR);
 		
-		JLabel tag1R = new JLabel("Ingrese el nombre de usuario: ",JLabel.CENTER);
-		tag1R.setSize(250, 20);
-		tag1R.setLocation(120, 80);
+		JLabel tag1R = new JLabel("Nombre: ",JLabel.CENTER);
+		tag1R.setSize(200, 20);
+		tag1R.setLocation(80, 30);
 		tag1R.setOpaque(true);
-		tag1R.setBackground(Color.black);
+		tag1R.setBackground(Color.decode("#60AF93"));
 		tag1R.setForeground(Color.white);
-		jp2.add(tag1R);
+		jpMC2.add(tag1R);
 		
 		JTextField usernameR = new JTextField("");
-		usernameR.setSize(250, 40);
-		usernameR.setLocation(120, 100);
-		jp2.add(usernameR);
+		usernameR.setSize(200, 20);
+		usernameR.setLocation(100, 50);
+		jpMC2.add(usernameR);
 		
-		JLabel tag2R = new JLabel("Ingrese el correo electrónico: ",JLabel.CENTER);
-		tag2R.setSize(250, 20);
-		tag2R.setLocation(120, 140);
+		JLabel tag2R = new JLabel("Usuario: ",JLabel.CENTER);
+		tag2R.setSize(200, 20);
+		tag2R.setLocation(80, 70);
 		tag2R.setOpaque(true);
-		tag2R.setBackground(Color.black);
+		tag2R.setBackground(Color.decode("#60AF93"));
 		tag2R.setForeground(Color.white);
-		jp2.add(tag2R);
+		jpMC2.add(tag2R);
 		
 		JPasswordField passwordR = new JPasswordField();
-		passwordR.setSize(250, 40);
-		passwordR.setLocation(120, 160);
-		jp2.add(passwordR);
+		passwordR.setSize(200, 20);
+		passwordR.setLocation(100, 90);
+		jpMC2.add(passwordR);
 		
-		JLabel tag3 = new JLabel("Ingrese el nombre: ",JLabel.CENTER);
-		tag3.setSize(250, 20);
-		tag3.setLocation(120, 210);
+		JLabel tag3 = new JLabel("Email: ",JLabel.CENTER);
+		tag3.setSize(200, 20);
+		tag3.setLocation(80, 110);
 		tag3.setOpaque(true);
-		tag3.setBackground(Color.black);
+		tag3.setBackground(Color.decode("#60AF93"));
 		tag3.setForeground(Color.white);
-		jp2.add(tag3);
+		jpMC2.add(tag3);
 		
 		JTextField name = new JTextField("");
-		name.setSize(250, 40);
-		name.setLocation(120, 250);
-		jp2.add(name);
+		name.setSize(200, 20);
+		name.setLocation(100, 130);
+		jpMC2.add(name);
 		
-		JLabel tag4 = new JLabel("Ingrese el nombre: ",JLabel.CENTER);
-		tag4.setSize(250, 20);
-		tag4.setLocation(120, 300);
+		JLabel tag4 = new JLabel("Contraseña: ",JLabel.CENTER);
+		tag4.setSize(200, 20);
+		tag4.setLocation(80, 150);
 		tag4.setOpaque(true);
-		tag4.setBackground(Color.black);
+		tag4.setBackground(Color.decode("#60AF93"));
 		tag4.setForeground(Color.white);
-		jp2.add(tag4);
+		jpMC2.add(tag4);
 		
 		JTextField lastname = new JTextField("");
-		lastname.setSize(250, 40);
-		lastname.setLocation(120, 340);
-		jp2.add(lastname);
+		lastname.setSize(200, 20);
+		lastname.setLocation(100, 170);
+		jpMC2.add(lastname);
 		
-		JButton btnAdd = new JButton("R E G I S T R O");
-		btnAdd.setSize(250,40);
-		btnAdd.setLocation(120, 390);
-		jp2.add(btnAdd);
+		JLabel tag5 = new JLabel("Confirmar Contraseña: ",JLabel.CENTER);
+		tag5.setSize(200, 20);
+		tag5.setLocation(80, 190);
+		tag5.setOpaque(true);
+		tag5.setBackground(Color.decode("#60AF93"));
+		tag5.setForeground(Color.white);
+		jpMC2.add(tag5);
+		
+		JTextField confirmarC = new JTextField("");
+		confirmarC.setSize(200, 20);
+		confirmarC.setLocation(100, 210);
+		jpMC2.add(confirmarC);
+		
+		JButton btnAdd = new JButton("Crear Usuario");
+		btnAdd.setSize(150,40);
+		btnAdd.setLocation(230, 290);
+		btnAdd.setOpaque(true);
+		btnAdd.setBackground(Color.decode("#3DADFF"));
+		btnAdd.setForeground(Color.white);
+		jpMC2.add(btnAdd);
 		
 		btnAdd.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				
+				anterior = actual;
+				actual = "login";
+				
+				limpiarVentana();
+				
+			}
+			
+		});
+		
+		JButton btnAdd2 = new JButton("Cancelar");
+		btnAdd2.setSize(150,40);
+		btnAdd2.setLocation(30, 290);
+		btnAdd2.setOpaque(true);
+		btnAdd2.setBackground(Color.decode("#E48080"));
+		btnAdd2.setForeground(Color.white);
+		jpMC2.add(btnAdd2);
+		
+		btnAdd2.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
