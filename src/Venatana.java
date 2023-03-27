@@ -4,12 +4,16 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.Scanner;
 
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
@@ -31,8 +35,7 @@ public class Venatana extends JFrame{
 		this.setVisible(true);
 		this.setSize(500, 600);
 		this.setLocationRelativeTo(null);
-		this.setTitle("Cuenta");
-		this.setResizable(false);
+		this.setTitle("AgustinoScary");
 		
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setLayout(null);
@@ -95,6 +98,14 @@ public class Venatana extends JFrame{
 			this.revalidate();
 		}
 		
+		if(actual.equals("listaU")){
+			panel = listaU();
+			
+			this.add(panel);
+			
+			this.repaint();
+			this.revalidate();
+		}
 	}
 	
 	public JPanel login()//________________________________________________________________
@@ -275,9 +286,21 @@ public class Venatana extends JFrame{
 		cuenta.add(cerrarSesion);
 		
 		
-		JMenuItem listaUsuarios = new JMenuItem("Lista de Usuarios");
-		JMenuItem crearUsuarios = new JMenuItem("Crear Usuarios");
-		
+		JMenuItem listaUsuarios = new JMenuItem("Lista de Usuarios");//LISTA DE USUARIOS----------------
+		listaUsuarios.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				anterior = actual;
+				actual = "listaU";
+				
+				limpiarVentana();
+				
+			}
+			
+		});
+		JMenuItem crearUsuarios = new JMenuItem("Crear Usuarios");//CREAR USUARIOS--------------------------
 		crearUsuarios.addActionListener(new ActionListener() {
 
 			@Override
@@ -291,7 +314,6 @@ public class Venatana extends JFrame{
 			}
 			
 		});
-		
 		usuarios.add(listaUsuarios);
 		usuarios.add(crearUsuarios);
 		
@@ -431,6 +453,84 @@ public class Venatana extends JFrame{
 		jpMC2.add(iniciarS);
 		
 		return(jpMC);
+	}
+	
+	public JPanel listaU()//________________________________________________________________________________________
+	{
+		
+		anterior = actual;
+		actual = "listaU";
+		
+		//PANEL PRINCIPAL-------------------------------------------------
+		JPanel jpLU = new JPanel();
+		jpLU.setSize(500, 600);
+		jpLU.setLocation(0, 0);
+		jpLU.setLayout(null);
+		jpLU.setBackground(Color.decode("#76D09A"));
+		
+		//TITULO----------------------------------------------------------
+		JLabel titulo = new JLabel("Lista de Usuarios",JLabel.CENTER);
+		titulo.setFont(new Font("Arial", Font.BOLD,20));
+		titulo.setSize(280, 40);
+		titulo.setLocation(100, 20);
+		titulo.setOpaque(true);
+		titulo.setBackground(Color.decode("#76D09A"));
+		titulo.setForeground(Color.white);
+		jpLU.add(titulo);
+		
+		//SUBTITULO----------------------------------------------------------
+		JLabel subTitulo = new JLabel("Editar",JLabel.LEFT);
+		subTitulo.setFont(new Font("Arial", Font.BOLD,15));
+		subTitulo.setSize(280, 40);
+		subTitulo.setLocation(50, 60);
+		subTitulo.setOpaque(true);
+		subTitulo.setBackground(Color.decode("#76D09A"));
+		subTitulo.setForeground(Color.white);
+		jpLU.add(subTitulo);
+		
+		//CAJA DE USUARIOS
+		File archivo = new File("users.txt");
+		ArrayList<String> opciones = new ArrayList<>();
+		try {
+		Scanner lector = new Scanner(archivo);
+		while (lector.hasNextLine()) {
+			String linea = lector.nextLine();
+			String[] partes = linea.split(" ");
+			opciones.add(partes[0]);
+		}
+		}catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+		JComboBox<String> cajaU = new JComboBox<String>(opciones.toArray(new String[0]));
+		
+		JButton botonEditar = new JButton("Editar a " + cajaU.getSelectedItem().toString());
+		botonEditar.setSize(375,40);
+		botonEditar.setLocation(50,140);
+		botonEditar.setBackground(Color.decode("#31C148"));
+		botonEditar.setForeground(Color.white);
+		jpLU.add(botonEditar);
+		
+		cajaU.setSize(375,30);
+		cajaU.setLocation(50,100);
+		cajaU.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				String nombreS = cajaU.getSelectedItem().toString();
+				botonEditar.setText("Editar a " + nombreS);
+				
+			}
+			
+		});
+		jpLU.add(cajaU);
+		
+		//BOTON
+		
+		
+		
+		
+		return jpLU;
 	}
 	
 	public JPanel registro() {
@@ -574,7 +674,6 @@ public class Venatana extends JFrame{
 		
 		return jp2;
 	}
-	
 	
 	public JPanel AyudaU() {
 		
@@ -763,8 +862,4 @@ public class Venatana extends JFrame{
 			}
 		}
 	}
-	
-	
 }
-
-
