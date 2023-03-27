@@ -1,4 +1,5 @@
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -10,6 +11,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 import javax.swing.JButton;
@@ -22,7 +24,11 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellRenderer;
 
 public class Venatana extends JFrame{
 	
@@ -461,14 +467,14 @@ public class Venatana extends JFrame{
 		anterior = actual;
 		actual = "listaU";
 		
-		//PANEL PRINCIPAL-------------------------------------------------
+		//PANEL PRINCIPAL--------------------------------------------------------------------
 		JPanel jpLU = new JPanel();
 		jpLU.setSize(500, 600);
 		jpLU.setLocation(0, 0);
 		jpLU.setLayout(null);
 		jpLU.setBackground(Color.decode("#76D09A"));
 		
-		//TITULO----------------------------------------------------------
+		//TITULO-------------------------------------------------------------------------------
 		JLabel titulo = new JLabel("Lista de Usuarios",JLabel.CENTER);
 		titulo.setFont(new Font("Arial", Font.BOLD,20));
 		titulo.setSize(280, 40);
@@ -478,7 +484,7 @@ public class Venatana extends JFrame{
 		titulo.setForeground(Color.white);
 		jpLU.add(titulo);
 		
-		//SUBTITULO----------------------------------------------------------
+		//SUBTITULO----------------------------------------------------------------------------
 		JLabel subTitulo = new JLabel("Editar",JLabel.LEFT);
 		subTitulo.setFont(new Font("Arial", Font.BOLD,15));
 		subTitulo.setSize(280, 40);
@@ -488,7 +494,7 @@ public class Venatana extends JFrame{
 		subTitulo.setForeground(Color.white);
 		jpLU.add(subTitulo);
 		
-		//CAJA DE USUARIOS
+		//CAJA DE USUARIOS-----------------------------------------------------------------------
 		File archivo = new File("users.txt");
 		ArrayList<String> opciones = new ArrayList<>();
 		try {
@@ -503,6 +509,7 @@ public class Venatana extends JFrame{
 		}
 		JComboBox<String> cajaU = new JComboBox<String>(opciones.toArray(new String[0]));
 		
+		//BOTON-----------------------------------------------------------------------------------
 		JButton botonEditar = new JButton("Editar a " + cajaU.getSelectedItem().toString());
 		botonEditar.setSize(375,40);
 		botonEditar.setLocation(50,140);
@@ -525,10 +532,70 @@ public class Venatana extends JFrame{
 		});
 		jpLU.add(cajaU);
 		
-		//BOTON
-		
-		
-		
+		//TABLA----------------------------------------------------------------------------------		
+		List<String[]> data = new ArrayList<>();
+
+        try (BufferedReader br = new BufferedReader(new FileReader("users.txt"))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                String[] row = line.split(" ");
+                data.add(row);
+            }
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+
+        // Creamos los nombres de las columnas
+        String[] columnas = {"Nombre", "Apellido", "Correo", "Contraseña", "Acción"};
+
+        // Creamos el modelo de la tabla
+        DefaultTableModel modelo = new DefaultTableModel(data.toArray(new Object[][]{}), columnas) {
+            public boolean isCellEditable(int row, int column) {
+            	return column == 4;
+            }
+        };
+
+        // Creamos la tabla con el modelo anterior
+        JTable tabla = new JTable(modelo);
+
+        // Creamos el botón que se usará en la tabla
+        JButton boton = new JButton("ELIMINAR");
+
+        // Creamos la celda de la tabla que contendrá el botón
+        TableCellRenderer renderer = new TableCellRenderer() {
+            @Override
+            public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+                return boton;
+            }
+        };
+
+        // Agregamos la celda con el botón al modelo de la tabla
+        tabla.getColumn("Acción").setCellRenderer(renderer);
+
+        // Agregamos un listener al botón
+        boton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Obtenemos el índice de la fila seleccionada
+                int fila = tabla.getSelectedRow();
+
+                // Obtenemos los datos de la fila seleccionada
+                String nombre = (String) modelo.getValueAt(fila, 0);
+                String apellido = (String) modelo.getValueAt(fila, 1);
+                String correo = (String) modelo.getValueAt(fila, 2);
+                String contrasena = (String) modelo.getValueAt(fila, 3);
+
+                // Mostramos los datos en un JOptionPane
+                JOptionPane.showMessageDialog(null, "Nombre: " + nombre + "\nApellido: " + apellido + "\nCorreo: " + correo + "\nContraseña: " + contrasena);
+            }
+        });
+
+        // Agregamos la tabla a un JScrollPane
+        JScrollPane scrollPane = new JScrollPane(tabla);
+        scrollPane.setLocation(50, 190);
+        scrollPane.setSize(375,100);
+        // Agregamos el JScrollPane al JFrame
+        jpLU.add(scrollPane);
 		
 		return jpLU;
 	}
