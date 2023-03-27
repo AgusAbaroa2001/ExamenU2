@@ -699,83 +699,106 @@ public class Venatana extends JFrame{
 		tituloU.setForeground(Color.white);
 		fondo.add(tituloU);
 		
-		JLabel txt1 = new JLabel("1. Hacer click en la opcion 'Usuarios' \n"
-				+ "en el menu superior ");
-		txt1.setFont(new Font("Arial", Font.BOLD,10));
-		txt1.setSize(300,20);
+		JLabel txt1 = new JLabel("1. Hacer click en la opcion 'Usuarios' en ");
+		txt1.setFont(new Font("Arial", Font.BOLD,17));
+		txt1.setSize(350,20);
 		txt1.setLocation(10, 20);
 		txt1.setOpaque(true);
 		txt1.setBackground(Color.decode("#60AF93"));
 		txt1.setForeground(Color.white);
 		jpMC2.add(txt1);
+		JLabel txt1_2 = new JLabel("el menú superior");
+		txt1_2.setFont(new Font("Arial", Font.BOLD,17));
+		txt1_2.setSize(350,20);
+		txt1_2.setLocation(20, 40);
+		txt1_2.setOpaque(true);
+		txt1_2.setBackground(Color.decode("#60AF93"));
+		txt1_2.setForeground(Color.white);
+		jpMC2.add(txt1_2);
 		
-		JLabel txt2 = new JLabel("2. Hacer click en la opcion 'Crear \n"
-				+ "Usuario' en el menu desplegado ");
-		txt2.setFont(new Font("Arial", Font.BOLD,12));
+		JLabel txt2 = new JLabel("2. Hacer click en la opcion 'Crear");
+		txt2.setFont(new Font("Arial", Font.BOLD,17));
 		txt2.setSize(400,20);
-		txt2.setLocation(10, 40);
+		txt2.setLocation(10, 65);
 		txt2.setOpaque(true);
 		txt2.setBackground(Color.decode("#60AF93"));
 		txt2.setForeground(Color.white);
 		jpMC2.add(txt2);
+		JLabel txt2_2 = new JLabel("'usuario' en el menú desplegado");
+		txt2_2.setFont(new Font("Arial", Font.BOLD,17));
+		txt2_2.setSize(350,20);
+		txt2_2.setLocation(20, 85);
+		txt2_2.setOpaque(true);
+		txt2_2.setBackground(Color.decode("#60AF93"));
+		txt2_2.setForeground(Color.white);
+		jpMC2.add(txt2_2);
 		
 		JLabel txt3 = new JLabel("3. Llenar los campos solicitados ");
-		txt3.setFont(new Font("Arial", Font.BOLD,12));
+		txt3.setFont(new Font("Arial", Font.BOLD,17));
 		txt3.setSize(400,20);
-		txt3.setLocation(10, 60);
+		txt3.setLocation(10, 110);
 		txt3.setOpaque(true);
 		txt3.setBackground(Color.decode("#60AF93"));
 		txt3.setForeground(Color.white);
 		jpMC2.add(txt3);
 		
 		JLabel txt4 = new JLabel("4. Escribir una pequeña descripcion de ti");
-		txt4.setFont(new Font("Arial", Font.BOLD,12));
+		txt4.setFont(new Font("Arial", Font.BOLD,17));
 		txt4.setSize(400,20);
-		txt4.setLocation(10, 80);
+		txt4.setLocation(10, 135);
 		txt4.setOpaque(true);
 		txt4.setBackground(Color.decode("#60AF93"));
 		txt4.setForeground(Color.white);
 		jpMC2.add(txt4);
 		
 		JLabel txt5 = new JLabel("5. Seleccionar tu comida favorita");
-		txt5.setFont(new Font("Arial", Font.BOLD,12));
+		txt5.setFont(new Font("Arial", Font.BOLD,17));
 		txt5.setSize(400,20);
-		txt5.setLocation(10, 100);
+		txt5.setLocation(10, 160);
 		txt5.setOpaque(true);
 		txt5.setBackground(Color.decode("#60AF93"));
 		txt5.setForeground(Color.white);
 		jpMC2.add(txt5);
 		
 		JLabel txt6 = new JLabel("6. Seleccionar color favorito");
-		txt6.setFont(new Font("Arial", Font.BOLD,12));
+		txt6.setFont(new Font("Arial", Font.BOLD,17));
 		txt6.setSize(400,20);
-		txt6.setLocation(10, 120);
+		txt6.setLocation(10, 185);
 		txt6.setOpaque(true);
 		txt6.setBackground(Color.decode("#60AF93"));
 		txt6.setForeground(Color.white);
 		jpMC2.add(txt6);
 		
-		JLabel txt7 = new JLabel("7. Hacer click en el boton 'Crear Usuario'");
-		txt7.setFont(new Font("Arial", Font.BOLD,12));
+		JLabel txt7 = new JLabel("7. Hacer click en el boton 'Crear");
+		txt7.setFont(new Font("Arial", Font.BOLD,17));
 		txt7.setSize(400,20);
-		txt7.setLocation(10, 140);
+		txt7.setLocation(10, 210);
 		txt7.setOpaque(true);
 		txt7.setBackground(Color.decode("#60AF93"));
 		txt7.setForeground(Color.white);
 		jpMC2.add(txt7);
+		JLabel txt7_2 = new JLabel("Usuario'");
+		txt7_2.setFont(new Font("Arial", Font.BOLD,17));
+		txt7_2.setSize(400,20);
+		txt7_2.setLocation(20, 230);
+		txt7_2.setOpaque(true);
+		txt7_2.setBackground(Color.decode("#60AF93"));
+		txt7_2.setForeground(Color.white);
+		jpMC2.add(txt7_2);
 		
 		JLabel txt8 = new JLabel("8. Listo, el usuario se ha creado");
-		txt8.setFont(new Font("Arial", Font.BOLD,12));
+		txt8.setFont(new Font("Arial", Font.BOLD,17));
 		txt8.setSize(400,20);
-		txt8.setLocation(10, 160);
+		txt8.setLocation(10, 255);
 		txt8.setOpaque(true);
 		txt8.setBackground(Color.decode("#60AF93"));
 		txt8.setForeground(Color.white);
 		jpMC2.add(txt8);
 		
 		JButton btnAdd = new JButton("Crear un usuario ahora");
+		btnAdd.setFont(new Font("Arial", Font.BOLD,15));
 		btnAdd.setSize(250,40);
-		btnAdd.setLocation(70, 250);
+		btnAdd.setLocation(70, 290);
 		btnAdd.setOpaque(true);
 		btnAdd.setBackground(Color.decode("#3DADFF"));
 		btnAdd.setForeground(Color.white);
