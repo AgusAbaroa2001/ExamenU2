@@ -13,6 +13,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 public class Splash extends JFrame {
+
     private static final long serialVersionUID = 1L;
     private JLabel label;
     private JPanel panel;
@@ -20,7 +21,7 @@ public class Splash extends JFrame {
     public Splash() {
         super("Splash Screen");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(600, 400);
+        setSize(600, 600);
         setResizable(false);
 
         // Centrar la ventana en la pantalla
@@ -34,7 +35,7 @@ public class Splash extends JFrame {
             @Override
             public void paintComponent(Graphics g) {
                 super.paintComponent(g);
-                Image image = new ImageIcon("img\splash.jpg").getImage();
+                Image image = new ImageIcon(getClass().getResource("/img/Splash.jpeg")).getImage();
                 g.drawImage(image, 0, 0, getWidth(), getHeight(), this);
             }
         };
@@ -45,7 +46,7 @@ public class Splash extends JFrame {
         // Agregar una etiqueta con el mensaje de carga
         label = new JLabel("Cargando...");
         label.setFont(new Font("Arial", Font.BOLD, 20));
-        label.setForeground(Color.WHITE);
+        label.setForeground(Color.black);
         label.setHorizontalAlignment(JLabel.CENTER);
 
         // Agregar la etiqueta al panel
@@ -66,9 +67,5 @@ public class Splash extends JFrame {
 
         // Cerrar la ventana del Splash Screen
         dispose();
-    }
-
-    public static void main(String[] args) {
-        new Splash();
     }
 }
