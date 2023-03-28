@@ -27,6 +27,7 @@ import javax.swing.JPasswordField;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.UIManager;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
 
@@ -461,6 +462,9 @@ public class Venatana extends JFrame{
 		return(jpMC);
 	}
 	
+	JTable tabla;
+	DefaultTableModel modelo;
+	JButton boton = new JButton("Borrar");
 	public JPanel listaU()//________________________________________________________________________________________
 	{
 		
@@ -533,67 +537,59 @@ public class Venatana extends JFrame{
 		jpLU.add(cajaU);
 		
 		//TABLA----------------------------------------------------------------------------------		
-		List<String[]> data = new ArrayList<>();
-
-        try (BufferedReader br = new BufferedReader(new FileReader("users.txt"))) {
-            String line;
-            while ((line = br.readLine()) != null) {
-                String[] row = line.split(" ");
-                data.add(row);
+		ArrayList<String[]> datos = new ArrayList<>();
+        try {
+            Scanner sc = new Scanner(new File("users.txt"));
+            while (sc.hasNextLine()) {
+                String[] fila = sc.nextLine().split(" ");
+                datos.add(fila);
             }
-        } catch (IOException ex) {
-            ex.printStackTrace();
+            sc.close();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-
-        // Creamos los nombres de las columnas
-        String[] columnas = {"Nombre", "Apellido", "Correo", "Contraseña", "Acción"};
-
-        // Creamos el modelo de la tabla
-        DefaultTableModel modelo = new DefaultTableModel(data.toArray(new Object[][]{}), columnas) {
-            public boolean isCellEditable(int row, int column) {
-            	return column == 4;
-            }
-        };
-
-        // Creamos la tabla con el modelo anterior
-        JTable tabla = new JTable(modelo);
-
-        // Creamos el botón que se usará en la tabla
-        JButton boton = new JButton("ELIMINAR");
-
-        // Creamos la celda de la tabla que contendrá el botón
+        
         TableCellRenderer renderer = new TableCellRenderer() {
-            @Override
-            public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
-                return boton;
-            }
+
+			@Override
+			public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected,
+					boolean hasFocus, int row, int column) {
+				// TODO Auto-generated method stub
+				if (isSelected) {
+					setForeground(table.getSelectionForeground());
+					setBackground(table.getSelectionBackground());
+				} else {
+					setForeground(table.getForeground());
+					setBackground(UIManager.getColor("Button.background"));
+				}
+				return boton;
+			}
         };
-
-        // Agregamos la celda con el botón al modelo de la tabla
-        tabla.getColumn("Acción").setCellRenderer(renderer);
-
-        // Agregamos un listener al botón
-        boton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                // Obtenemos el índice de la fila seleccionada
-                int fila = tabla.getSelectedRow();
-
-                // Obtenemos los datos de la fila seleccionada
-                String nombre = (String) modelo.getValueAt(fila, 0);
-                String apellido = (String) modelo.getValueAt(fila, 1);
-                String correo = (String) modelo.getValueAt(fila, 2);
-                String contrasena = (String) modelo.getValueAt(fila, 3);
-
-                // Mostramos los datos en un JOptionPane
-                JOptionPane.showMessageDialog(null, "Nombre: " + nombre + "\nApellido: " + apellido + "\nCorreo: " + correo + "\nContraseña: " + contrasena);
+        
+        String[] columnas = {"Nombre", "Apellido", "Correo", "Contraseña", "Acción"};
+        modelo = new DefaultTableModel(columnas, datos.size());
+        for (int i = 0; i < datos.size(); i++) {
+            String[] fila = datos.get(i);
+            for (int j = 0; j < fila.length; j++) {
+                modelo.setValueAt(fila[j], i, j);
             }
-        });
-
-        // Agregamos la tabla a un JScrollPane
+            boton = new JButton("Borrar");
+            boton.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    int opcion = JOptionPane.showConfirmDialog(null, "¿Está seguro de borrar esta cuenta?", "Confirmación", JOptionPane.YES_NO_OPTION);
+                    if (opcion == JOptionPane.YES_OPTION) {
+                        int fila = tabla.getSelectedRow();
+                        modelo.removeRow(fila);
+                    }
+                }
+            });
+            modelo.setValueAt(boton, i, 4);
+        }
+        tabla = new JTable(modelo);
+        tabla.getColumn("Acción").setCellRenderer(renderer);
         JScrollPane scrollPane = new JScrollPane(tabla);
-        scrollPane.setLocation(50, 190);
-        scrollPane.setSize(375,100);
+        scrollPane.setLocation(25, 190);
+        scrollPane.setSize(425,100);
         // Agregamos el JScrollPane al JFrame
         jpLU.add(scrollPane);
 		
@@ -891,8 +887,6 @@ public class Venatana extends JFrame{
 		return fondo;
 		
 	}
-	
-	
 	
 	public boolean leector(String nombre,String contraseña) throws IOException {
 		File archivo;
