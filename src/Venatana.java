@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-import javax.swing.ImageIcon;
+import javax.swing.DefaultCellEditor;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
@@ -29,8 +29,10 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.UIManager;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
+import javax.swing.table.TableColumn;
 
 public class Venatana extends JFrame{
 	
@@ -458,14 +460,42 @@ public class Venatana extends JFrame{
 		iniciarS.setLocation(200,280);
 		iniciarS.setBackground(Color.decode("#3DADFF"));
 		iniciarS.setForeground(Color.white);
+		iniciarS.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				int contTemp = 0;
+				String aux = new String(contraC.getPassword());
+
+				
+				if (nombreC.getText().length()!=0 && 
+					apellidosC.getText().length()!=0 &&  
+					correoC.getText().length()!=0 &&  
+					aux.length()!=0) {
+					contTemp+=1;
+				}else {
+					JOptionPane.showMessageDialog(null,"La informacion no se ha podido actualizar","Error al llenar datos",JOptionPane.ERROR_MESSAGE);
+					contTemp=0;
+				}
+			
+				if(contTemp>=1) {
+					JOptionPane.showMessageDialog(null,"Cuenta actulizada con exito");
+					
+					limpiarVentana();
+					repaint();
+					revalidate();
+					
+				}
+			}
+			
+		});
 		jpMC2.add(iniciarS);
 		
 		return(jpMC);
 	}
 	
-	JTable tabla;
-	DefaultTableModel modelo;
-	JButton boton = new JButton("Borrar");
+    JButton deleteButton = new JButton("Eliminar");
 	public JPanel listaU()//________________________________________________________________________________________
 	{
 		
@@ -538,62 +568,67 @@ public class Venatana extends JFrame{
 		jpLU.add(cajaU);
 		
 		//TABLA----------------------------------------------------------------------------------		
-		ArrayList<String[]> datos = new ArrayList<>();
-        try {
-            Scanner sc = new Scanner(new File("users.txt"));
-            while (sc.hasNextLine()) {
-                String[] fila = sc.nextLine().split(" ");
-                datos.add(fila);
+		DefaultTableModel modelo = new DefaultTableModel(new String[]{"Nombre", "Apellido", "Correo", "Contraseña", "Acción"}, 0) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                if (column == 2) {
+                	return true;
+                }else {
+                	return false;
+                }
             }
-            sc.close();
+        };
+        
+        try (BufferedReader br = new BufferedReader(new FileReader("users.txt"))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                String[] data = line.split(" ");
+                modelo.addRow(new Object[]{data[0], data[1], data[2], data[3], ""});
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
+        JTable tabla = new JTable(modelo);
         
         TableCellRenderer renderer = new TableCellRenderer() {
-
-			@Override
-			public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected,
-					boolean hasFocus, int row, int column) {
-				// TODO Auto-generated method stub
-				if (isSelected) {
-					setForeground(table.getSelectionForeground());
-					setBackground(table.getSelectionBackground());
-				} else {
-					setForeground(table.getForeground());
-					setBackground(UIManager.getColor("Button.background"));
-				}
-				return boton;
-			}
+            @Override
+            public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+                return deleteButton;
+            }
         };
         
-        String[] columnas = {"Nombre", "Apellido", "Correo", "Contraseña", "Acción"};
-        modelo = new DefaultTableModel(columnas, datos.size());
-        for (int i = 0; i < datos.size(); i++) {
-            String[] fila = datos.get(i);
-            for (int j = 0; j < fila.length; j++) {
-                modelo.setValueAt(fila[j], i, j);
-            }
-            boton = new JButton("Borrar");
-            boton.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent e) {
-                    int opcion = JOptionPane.showConfirmDialog(null, "¿Está seguro de borrar esta cuenta?", "Confirmación", JOptionPane.YES_NO_OPTION);
-                    if (opcion == JOptionPane.YES_OPTION) {
-                        int fila = tabla.getSelectedRow();
-                        modelo.removeRow(fila);
-                    }
-                }
-            });
-            modelo.setValueAt(boton, i, 4);
-        }
-        tabla = new JTable(modelo);
-        tabla.getColumn("Acción").setCellRenderer(renderer);
+        JButton deleteButton = new JButton("Eliminar");
+        deleteButton.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				if (e.getSource() == deleteButton) {
+		            int selectedRow = tabla.getSelectedRow();
+		            if (selectedRow != -1) {
+		                int opcion = JOptionPane.showConfirmDialog(null, "¿Está seguro de borrar esta cuenta?", "CONFIRMACION", JOptionPane.YES_NO_CANCEL_OPTION);
+		                if (opcion == JOptionPane.YES_OPTION) {
+		                    DefaultTableModel model = (DefaultTableModel) tabla.getModel();
+		                    model.removeRow(selectedRow);
+		                }
+		            }
+		        }
+			}
+        	
+        });
+       
+        TableColumn column = tabla.getColumnModel().getColumn(4);
+        column.setCellRenderer(renderer);
+        column.setCellEditor(null);
+        
         JScrollPane scrollPane = new JScrollPane(tabla);
         scrollPane.setLocation(25, 190);
         scrollPane.setSize(425,100);
         // Agregamos el JScrollPane al JFrame
         jpLU.add(scrollPane);
 		
+       
+        
 		return jpLU;
 	}
 	
@@ -639,7 +674,7 @@ public class Venatana extends JFrame{
 		usernameR.setLocation(10, 30);
 		jpMC2.add(usernameR);
 		
-		JLabel tag2R = new JLabel("Usuario: ",JLabel.CENTER);
+		JLabel tag2R = new JLabel("Apellido: ",JLabel.CENTER);
 		tag2R.setSize(62, 20);
 		tag2R.setLocation(10, 60);
 		tag2R.setOpaque(true);
@@ -705,12 +740,36 @@ public class Venatana extends JFrame{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
+				int contTemp = 0;
 				
-				anterior = actual;
-				actual = "login";
+				if (usernameR.getText().length()!=0 && 
+					userR.getText().length()!=0 &&  
+					name.getText().length()!=0) {
+					contTemp+=1;
+				}else {
+					JOptionPane.showMessageDialog(null,"Faltan campos por llenar","Error al llenar datos",JOptionPane.ERROR_MESSAGE);
+					contTemp=0;
+				}
 				
+				String aux = new String(passwordR.getPassword());
+				String auxDos = new String(passwordCR.getPassword());
+				if (aux.equals(auxDos) && aux.length()!=0) {
+					contTemp+=1;
+				}else 
+					JOptionPane.showMessageDialog(null,"Las contraseñas no coinciden","Contraseña erronea",JOptionPane.ERROR_MESSAGE);
 				
-				limpiarVentana();
+				if(contTemp>=2) {
+					JOptionPane.showMessageDialog(null,"Cuenta creada con exitoso");
+					
+					limpiarVentana();
+					repaint();
+					revalidate();
+					try {
+						registrarDatos(usernameR.getText(),userR.getText(),name.getText(),aux);
+					} catch (IOException e1) {
+						e1.printStackTrace();
+					}
+				}
 				
 			}
 			
@@ -731,7 +790,7 @@ public class Venatana extends JFrame{
 				// TODO Auto-generated method stub
 				
 				anterior = actual;
-				actual = "login";
+				actual = "menu";
 				
 				limpiarVentana();
 				
@@ -892,6 +951,7 @@ public class Venatana extends JFrame{
 		
 	}
 	
+	
 	public boolean leector(String nombre,String contraseña) throws IOException {
 		File archivo;
 		archivo = new File("users.txt");
@@ -951,3 +1011,4 @@ public class Venatana extends JFrame{
 		}
 	}
 }
+
