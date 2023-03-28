@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
@@ -608,8 +609,8 @@ public class Venatana extends JFrame{
 		jp2.setBackground(Color.decode("#76D09A"));
 		
 		JPanel jpMC2 = new JPanel();
-		jpMC2.setSize(400, 400);
-		jpMC2.setLocation(50, 150);
+		jpMC2.setSize(400, 380);
+		jpMC2.setLocation(43, 150);
 		jpMC2.setLayout(null);
 		jpMC2.setBackground(Color.decode("#60AF93"));
 		jp2.add(jpMC2);
@@ -618,76 +619,78 @@ public class Venatana extends JFrame{
 		JLabel titleR = new JLabel("Crear usuario",JLabel.CENTER);
 		titleR.setFont(new Font("Comic Sans", Font.BOLD,20));
 		titleR.setSize(200, 40);
-		titleR.setLocation(150, 20);
+		titleR.setLocation(130, 20);
 		titleR.setOpaque(true);
 		titleR.setBackground(Color.decode("#76D09A"));
 		titleR.setForeground(Color.white);
 		jp2.add(titleR);
 		
+		//espacios a rellenar
 		JLabel tag1R = new JLabel("Nombre: ",JLabel.CENTER);
-		tag1R.setSize(200, 20);
-		tag1R.setLocation(80, 30);
+		tag1R.setSize(60, 20);
+		tag1R.setLocation(10, 5);
 		tag1R.setOpaque(true);
 		tag1R.setBackground(Color.decode("#60AF93"));
 		tag1R.setForeground(Color.white);
 		jpMC2.add(tag1R);
 		
 		JTextField usernameR = new JTextField("");
-		usernameR.setSize(200, 20);
-		usernameR.setLocation(100, 50);
+		usernameR.setSize(380, 20);
+		usernameR.setLocation(10, 30);
 		jpMC2.add(usernameR);
 		
 		JLabel tag2R = new JLabel("Usuario: ",JLabel.CENTER);
-		tag2R.setSize(200, 20);
-		tag2R.setLocation(80, 70);
+		tag2R.setSize(62, 20);
+		tag2R.setLocation(10, 60);
 		tag2R.setOpaque(true);
 		tag2R.setBackground(Color.decode("#60AF93"));
 		tag2R.setForeground(Color.white);
 		jpMC2.add(tag2R);
 		
-		JPasswordField passwordR = new JPasswordField();
-		passwordR.setSize(200, 20);
-		passwordR.setLocation(100, 90);
-		jpMC2.add(passwordR);
+		JTextField userR = new JTextField();
+		userR.setSize(380, 20);
+		userR.setLocation(10, 80);
+		jpMC2.add(userR);
 		
 		JLabel tag3 = new JLabel("Email: ",JLabel.CENTER);
-		tag3.setSize(200, 20);
-		tag3.setLocation(80, 110);
+		tag3.setSize(55, 20);
+		tag3.setLocation(10, 110);
 		tag3.setOpaque(true);
 		tag3.setBackground(Color.decode("#60AF93"));
 		tag3.setForeground(Color.white);
 		jpMC2.add(tag3);
 		
 		JTextField name = new JTextField("");
-		name.setSize(200, 20);
-		name.setLocation(100, 130);
+		name.setSize(380, 20);
+		name.setLocation(10, 130);
 		jpMC2.add(name);
 		
 		JLabel tag4 = new JLabel("Contraseña: ",JLabel.CENTER);
-		tag4.setSize(200, 20);
-		tag4.setLocation(80, 150);
+		tag4.setSize(80, 20);
+		tag4.setLocation(10, 160);
 		tag4.setOpaque(true);
 		tag4.setBackground(Color.decode("#60AF93"));
 		tag4.setForeground(Color.white);
 		jpMC2.add(tag4);
 		
-		JTextField lastname = new JTextField("");
-		lastname.setSize(200, 20);
-		lastname.setLocation(100, 170);
-		jpMC2.add(lastname);
+		JPasswordField passwordR = new JPasswordField("");
+		passwordR.setSize(380, 20);
+		passwordR.setLocation(10, 180);
+		jpMC2.add(passwordR);
 		
 		JLabel tag5 = new JLabel("Confirmar Contraseña: ",JLabel.CENTER);
-		tag5.setSize(200, 20);
-		tag5.setLocation(80, 190);
+		tag5.setSize(135, 20);
+		tag5.setLocation(10, 220);
 		tag5.setOpaque(true);
 		tag5.setBackground(Color.decode("#60AF93"));
 		tag5.setForeground(Color.white);
 		jpMC2.add(tag5);
 		
-		JTextField confirmarC = new JTextField("");
-		confirmarC.setSize(200, 20);
-		confirmarC.setLocation(100, 210);
-		jpMC2.add(confirmarC);
+		JPasswordField passwordCR = new JPasswordField("");
+		passwordCR.setSize(380, 20);
+		passwordCR.setLocation(10, 240);
+		jpMC2.add(passwordCR);
+		
 		
 		JButton btnAdd = new JButton("Crear Usuario");
 		btnAdd.setSize(150,40);
@@ -706,6 +709,7 @@ public class Venatana extends JFrame{
 				anterior = actual;
 				actual = "login";
 				
+				
 				limpiarVentana();
 				
 			}
@@ -714,7 +718,7 @@ public class Venatana extends JFrame{
 		
 		JButton btnAdd2 = new JButton("Cancelar");
 		btnAdd2.setSize(150,40);
-		btnAdd2.setLocation(30, 290);
+		btnAdd2.setLocation(20, 290);
 		btnAdd2.setOpaque(true);
 		btnAdd2.setBackground(Color.decode("#E48080"));
 		btnAdd2.setForeground(Color.white);

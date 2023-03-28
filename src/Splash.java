@@ -19,7 +19,7 @@ public class Splash extends JFrame {
     private JPanel panel;
 
     public Splash() {
-        super("Splash Screen");
+        super("Cargando...");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(600, 600);
         setResizable(false);
